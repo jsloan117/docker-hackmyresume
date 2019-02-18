@@ -1,6 +1,6 @@
 # docker-hackmyresume
 
-Docker hackmyresume on Alpine Linux
+hackmyresume on Alpine Linux
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![Docker Automated build](https://img.shields.io/docker/automated/jsloan117/hackmyresume.svg)
@@ -8,7 +8,7 @@ Docker hackmyresume on Alpine Linux
 [![](https://images.microbadger.com/badges/image/jsloan117/hackmyresume.svg)](https://microbadger.com/images/jsloan117/hackmyresume "Get your own image badge on microbadger.com")
 [![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/jsloan117_marketplace/jsloan117%2Fdocker-hackmyresume%2Fdocker-hackmyresume?type=cf-1)]( https://g.codefresh.io/public/accounts/jsloan117_marketplace/pipelines/jsloan117/docker-hackmyresume/docker-hackmyresume)
 
-Docker container that allow you to generate PDF/HTML based resumes using hackmyresume.
+Docker container that allows you to generate PDF/HTML based resumes using [hackmyresume](https://github.com/hacksalot/HackMyResume).
 
 ## Run container from Docker registry
 
@@ -35,7 +35,7 @@ jsloan117/hackmyresume:latest hackmyresume build /resumes/resume.json /resumes/r
 -t /usr/lib/node_modules/your-jsonresume-theme-name
 ```
 
-### Installed jsonresume themes
+## Installed jsonresume themes
 
 | Theme Name                       |
 |:--------------------------------:|
@@ -53,7 +53,7 @@ jsloan117/hackmyresume:latest hackmyresume build /resumes/resume.json /resumes/r
 | `jsonresume-theme-spartan`       |
 | `jsonresume-theme-stackoverflow` |
 
-#### Use theme not install
+## Use theme not installed
 
 ```bash
 docker run --rm --name=hackmyresume -it \

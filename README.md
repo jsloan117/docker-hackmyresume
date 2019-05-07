@@ -4,7 +4,7 @@ hackmyresume on Alpine Linux
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/jsloan117/hackmyresume.svg)
-![Docker Build Status](https://img.shields.io/docker/cloud/build/jsloan117/deluge.svg)
+![Docker Build Status](https://img.shields.io/docker/cloud/build/jsloan117/hackmyresume.svg)
 [![Docker Pulls](https://img.shields.io/docker/pulls/jsloan117/hackmyresume.svg)](https://img.shields.io/docker/pulls/jsloan117/hackmyresume.svg)
 [![](https://images.microbadger.com/badges/image/jsloan117/hackmyresume.svg)](https://microbadger.com/images/jsloan117/hackmyresume "Get your own image badge on microbadger.com")
 

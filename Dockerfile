@@ -1,8 +1,6 @@
 FROM alpine:latest
-LABEL Name=hackmyresume Version=1.0
+LABEL Name=hackmyresume Version=1.1
 LABEL maintainer="Jonathan Sloan"
-
-# Install wkhtmltopdf to be able to generate PDF resumes
 
 RUN echo "*** updating system ***" \
     && apk update && apk upgrade \
@@ -11,7 +9,6 @@ RUN echo "*** updating system ***" \
     && echo "*** cleanup ***" \
     && rm -rf /tmp/* /var/tmp/*
 
-# Install hackmyresume and jsonresume themes packages
 RUN npm install -g \
     hackmyresume \
     jsonresume-theme-eloquent \

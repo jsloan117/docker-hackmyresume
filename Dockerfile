@@ -1,5 +1,5 @@
 FROM alpine:latest
-LABEL Name=hackmyresume Version=1.1
+LABEL Name=hackmyresume Version=1.2
 LABEL maintainer="Jonathan Sloan"
 
 RUN echo "*** updating system ***" \
@@ -24,3 +24,11 @@ RUN npm install -g \
     jsonresume-theme-onepage \
     jsonresume-theme-spartan \
     jsonresume-theme-stackoverflow
+
+WORKDIR /resumes
+
+VOLUME [ "/resumes" ]
+
+#ARG DEFAULT_THEME=/usr/lib/node_modules/jsonresume-theme-eloquent
+
+CMD [ "hackmyresume" ]

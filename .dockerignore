@@ -2,3 +2,7 @@
 .cache
 .azure-pipelines.yml
 Jenkinsfile
+# mkdocs
+docs/
+mkdocs.yml
+site/

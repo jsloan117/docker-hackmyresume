@@ -42,7 +42,7 @@ pipeline {
         }
       }
     }
-    stage('Building image') {
+    stage('Building images') {
       /* build images */
       steps {
         script {
@@ -56,12 +56,26 @@ pipeline {
         }
       }
     }
-    stage('Test image') {
+    stage('Test images') {
       /* simple testing method */
       steps {
         script {
           dockerImage.inside() {
             sh 'hackmyresume --version'
+          }
+        }
+      }
+    }
+    stage('Push images') {
+      /* push images to Docker Hub */
+      steps {
+        script {
+          if (params.BRANCH == 'dev') {
+            dockerImage.push('dev')
+            dockerImage.push('ubuntu-dev')
+          } else if (params.BRANCH == 'master') {
+            dockerImage.push('latest')
+            dockerImage.push('ubuntu-latest')
           }
         }
       }

@@ -4,7 +4,7 @@ LABEL Name=hackmyresume maintainer="Jonathan Sloan"
 RUN echo "*** installing packages ***" \
     && apk update && apk --no-cache add wkhtmltopdf nodejs npm \
     && echo "*** cleanup ***" \
-    && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
+    && rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/lib/apk/*
 
 RUN npm install -g \
     hackmyresume \

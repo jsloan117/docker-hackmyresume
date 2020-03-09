@@ -2,16 +2,16 @@ site_name: docker-hackmyresume
 site_url: http://jsloan117.github.io/docker-hackmyresume
 repo_url: https://github.com/jsloan117/docker-hackmyresume
 theme:
-  name: 'material'
+  name: "material"
 markdown_extensions:
-    - toc:
-        permalink: True
-        separator: "_"
+  - toc:
+      permalink: true
+      separator: "_"
 nav:
-   - 'Home': 'index.md'
-   - 'Run from Docker registry': 'run-from-docker-registry.md'
-   - 'Preinstalled themes': 'preinstalled-themes.md'
-   - 'Using other themes': 'use-themes-not-installed.md'
-   - 'Generated Resumes': 'generated-resume.md'
+  - "Home": "index.md"
+  - "Run from Docker registry": "run-from-docker-registry.md"
+  - "Preinstalled themes": "preinstalled-themes.md"
+  - "Using other themes": "use-themes-not-installed.md"
+  - "Generated Resumes": "generated-resume.md"
 plugins:
-    - search
+  - search

@@ -1,15 +1,16 @@
 The container is available from the Docker registry and this is the simplest way to get it.
+
 To run the container use this command:
 
 ```bash
-docker run --rm --name=hackmyresume -it \
+docker run --rm --name hackmyresume \
 -v ${PWD}:/resumes \
-jsloan117/hackmyresume:latest hackmyresume build /resumes/resume.json /resumes/resume.pdf \
--t /usr/lib/node_modules/your-jsonresume-theme-name
+jsloan117/hackmyresume:latest --help
 ```
 
 ```bash
-docker run --rm --name=hackmyresume -it \
+docker run --rm --name hackmyresume \
 -v ${PWD}:/resumes \
-jsloan117/hackmyresume:latest hackmyresume --help
+jsloan117/hackmyresume:latest build /resumes/resume.json /resumes/resume.pdf \
+-t /usr/lib/node_modules/jsonresume-theme-stackoverflow
 ```

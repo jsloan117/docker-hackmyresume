@@ -1,2 +1,5 @@
 .cache
 site/
+*.aes
+*.enc
+.ssh

@@ -8,7 +8,7 @@ Hackmyresume allows you to generate multiple output formats using different them
 
 ## Quick setup
 
-This image contains hackmyresume and a handful of themes for quick use. Please see [Run from Docker registry](http://jsloan117.github.io/docker-mkdocs/run-from-docker-registry) for more details and commands. All installed themes are located under: /usr/lib/node_modules, the default used theme is jsonresume-theme-eloquent.
+This image contains hackmyresume and a handful of themes for quick use. Please see [Run from Docker registry](http://jsloan117.github.io/docker-mkdocs/run-from-docker-registry) for more details and commands. All installed themes are located under: /usr/lib/node_modules, the default theme is jsonresume-theme-eloquent.
 
 Mount the folder where your `resume.json` file resides as a volume to /resumes.
 

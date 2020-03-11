@@ -17,7 +17,7 @@
   </a>
 </p>
 
-Hackmyresume allows you to generate multiple output formats using different themes. Please see [HackMyResume](https://github.com/hacksalot/HackMyResume) for all other things you can do with this application. All installed themes are located under: /usr/lib/node_modules, the default used theme is jsonresume-theme-eloquent.
+Hackmyresume allows you to generate multiple output formats using different themes. Please see [HackMyResume](https://github.com/hacksalot/HackMyResume) for all other things you can do with this application. All installed themes are located under: /usr/lib/node_modules, the default theme is jsonresume-theme-eloquent.
 
 Mount the folder where your `resume.json` file resides as a volume to /resumes.
 

@@ -1,6 +1,6 @@
-The container is available from the Docker registry and this is the simplest way to get it.
+The image is available from the Docker registry and this is the simplest way to get it.
 
-To run the container use this command:
+To run the image use this command:
 
 ```bash
 docker run --rm --name hackmyresume \

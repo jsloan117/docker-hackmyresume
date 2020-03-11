@@ -2,7 +2,7 @@
 # build, test and push docker images
 
 set -euo pipefail
-set -xv
+
 if [ "${TRAVIS_BRANCH}" = master ]; then
   IMAGE_TAG=latest
 else
@@ -15,13 +15,15 @@ get_version () {
   SEMVER_BUMP="${SEMVER_BUMP}"
   if CURRENT_VERSION=$(docker run --rm "${IMAGE_NAME}":"${IMAGE_TAG}" cat VERSION 2> /dev/null); then
     echo "${CURRENT_VERSION}" > VERSION
+    NEXT_VERSION=$(docker run --rm -it -v "${PWD}":/app -w /app treeder/bump --filename VERSION "${SEMVER_BUMP}")
+    echo "Version: ${NEXT_VERSION}"
   fi
   # allows for starting semantic versioning & overriding auto-calculated value (set within TravisCI)
   if [[ -n "${SEMVER_OVERRIDE}" ]]; then
     echo "${SEMVER_OVERRIDE}" > VERSION
+    NEXT_VERSION=$(cat VERSION)
+    echo "Version: ${NEXT_VERSION}"
   fi
-  NEXT_VERSION=$(docker run --rm -it -v "${PWD}":/app -w /app treeder/bump --filename VERSION "${SEMVER_BUMP}")
-  echo "Version: ${NEXT_VERSION}"
   export NEXT_VERSION
 }
 
@@ -100,7 +102,9 @@ push_images () {
   fi
 }
 
-get_version
+if [[ "${TRAVIS_BRANCH}" = master ]]; then
+  get_version
+fi
 build_images
 install_prereqs
 if [[ "${VULNERABILITY_TEST}" = true ]]; then

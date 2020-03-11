@@ -1,5 +1,5 @@
 FROM alpine:3.11
-LABEL Name=hackmyresume maintainer="Jonathan Sloan"
+LABEL Name=hackmyresume Maintainer="Jonathan Sloan"
 
 RUN echo "*** installing packages ***" \
     && apk update && apk --no-cache add wkhtmltopdf nodejs npm \
@@ -25,6 +25,8 @@ RUN npm install -g \
 WORKDIR /resumes
 
 VOLUME [ "/resumes" ]
+
+COPY VERSION .
 
 ENTRYPOINT [ "hackmyresume" ]
 CMD [ "build", "/resumes/resume.json", "/resumes/resume.pdf", "-t", "/usr/lib/node_modules/jsonresume-theme-eloquent" ]

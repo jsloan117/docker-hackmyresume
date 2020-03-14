@@ -70,7 +70,7 @@ vulnerability_scanner () {
     trivy --exit-code 0 --severity "UNKNOWN,LOW,MEDIUM,HIGH" --light -q "${IMAGE}"
     echo -e "\n<<< Checking ${IMAGE} for critical vulnerabilities >>>\n"
     trivy --exit-code 1 --severity CRITICAL --light -q "${IMAGE}"
-    if [[ "${TRAVIS_BRANCH}" = master ]]; then
+    if [[ "${TRAVIS_PULL_REQUEST}" = false ]] && [[ "${TRAVIS_BRANCH}" = master ]]; then
       snyk auth "${SNYK_TOKEN}" &> /dev/null
       snyk monitor --docker "${IMAGE_NAME}":"${IMAGE_TAG}" --file=Dockerfile
       for DISTRO in $(find . -type f -iname "Dockerfile.*" -print | cut -d'/' -f2 | cut -d'.' -f 2); do

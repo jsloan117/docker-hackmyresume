@@ -38,7 +38,7 @@ build_images () {
     echo -e "\n<<< Building ${DISTRO} image >>>\n"
     docker build --rm -f Dockerfile."${DISTRO}" -t "${IMAGE_NAME}":"${IMAGE_TAG}"-"${DISTRO}" .
   done
-  if docker image ls | tail -n+2 | awk '{print $2}'| grep '<none>'; then
+  if docker image ls | tail -n+2 | awk '{print $2}'| grep '<none>' &> /dev/null; then
     echo -e '\n<<< Cleaning up dangling images >>>\n'
     docker rmi "$(docker images -f dangling=true -q)" 2>&-
   fi 

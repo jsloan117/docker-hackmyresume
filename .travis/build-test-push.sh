@@ -12,7 +12,13 @@ export IMAGE_TAG
 
 get_version () {
   echo -e '\n<<< Getting & setting versioning info >>>\n'
-  if CURRENT_VERSION=$(docker run --rm "${IMAGE_NAME}":"${IMAGE_TAG}" cat VERSION 2> /dev/null); then
+  # allows for starting semantic versioning & overriding auto-calculated value (set within TravisCI)
+  if [[ -n "${SEMVER_OVERRIDE}" ]]; then
+    echo "${SEMVER_OVERRIDE}" > VERSION
+    NEXT_VERSION=$(cat VERSION)
+    echo "Version: ${NEXT_VERSION}"
+  else
+    CURRENT_VERSION=$(docker run --entrypoint="" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" cat VERSION 2> /dev/null)
     echo "${CURRENT_VERSION}" > VERSION
     if [[ "${TRAVIS_BRANCH}" = master ]]; then
       NEXT_VERSION=$(docker run --rm -it -v "${PWD}":/app -w /app treeder/bump --filename VERSION "${SEMVER_BUMP}")
@@ -21,12 +27,6 @@ get_version () {
       NEXT_VERSION=$(cat VERSION)
       echo "Version: ${NEXT_VERSION}"
     fi
-  fi
-  # allows for starting semantic versioning & overriding auto-calculated value (set within TravisCI)
-  if [[ -n "${SEMVER_OVERRIDE}" ]]; then
-    echo "${SEMVER_OVERRIDE}" > VERSION
-    NEXT_VERSION=$(cat VERSION)
-    echo "Version: ${NEXT_VERSION}"
   fi
   export NEXT_VERSION
 }

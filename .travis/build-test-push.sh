@@ -12,11 +12,15 @@ export IMAGE_TAG
 
 get_version () {
   echo -e '\n<<< Getting & setting versioning info >>>\n'
-  SEMVER_BUMP="${SEMVER_BUMP}"
   if CURRENT_VERSION=$(docker run --rm "${IMAGE_NAME}":"${IMAGE_TAG}" cat VERSION 2> /dev/null); then
     echo "${CURRENT_VERSION}" > VERSION
-    NEXT_VERSION=$(docker run --rm -it -v "${PWD}":/app -w /app treeder/bump --filename VERSION "${SEMVER_BUMP}")
-    echo "Version: ${NEXT_VERSION}"
+    if [[ "${TRAVIS_BRANCH}" = master ]]; then
+      NEXT_VERSION=$(docker run --rm -it -v "${PWD}":/app -w /app treeder/bump --filename VERSION "${SEMVER_BUMP}")
+      echo "Version: ${NEXT_VERSION}"
+    else
+      NEXT_VERSION=$(cat VERSION)
+      echo "Version: ${NEXT_VERSION}"
+    fi
   fi
   # allows for starting semantic versioning & overriding auto-calculated value (set within TravisCI)
   if [[ -n "${SEMVER_OVERRIDE}" ]]; then
@@ -46,7 +50,7 @@ install_prereqs () {
   GOSS_VER=$(curl -s "https://api.github.com/repos/aelsabbahy/goss/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
   export GOSS_VER
   curl -sL "https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VER}/goss-linux-amd64" -o "${HOME}/bin/goss"
-  curl -sL "https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VER}/dgoss" -o "$HOME/bin/dgoss"
+  curl -sL "https://github.com/aelsabbahy/goss/releases/download/v${GOSS_VER}/dgoss" -o "${HOME}/bin/dgoss"
   # trivy (vuln scanner)
   TRIVY_VER=$(curl -s "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
   export TRIVY_VER
@@ -55,16 +59,16 @@ install_prereqs () {
   # snyk (vuln scanner)
   SNYK_VER=$(curl -s "https://api.github.com/repos/snyk/snyk/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
   export SNYK_VER
-  curl -sL "https://github.com/snyk/snyk/releases/download/v$SNYK_VER/snyk-linux" -o "$HOME/bin/snyk"
-  chmod +rx "$HOME"/bin/{goss,dgoss,snyk}
+  curl -sL "https://github.com/snyk/snyk/releases/download/v$SNYK_VER/snyk-linux" -o "${HOME}/bin/snyk"
+  chmod +rx "${HOME}"/bin/{goss,dgoss,snyk}
 }
 
 vulnerability_scanner () {
-  echo -e '\n<<< Checking image for vulnerabilities >>>\n'
   trivy --clear-cache
   for IMAGE in $(docker image ls | tail -n+2 | awk '{OFS=":";} {print $1,$2}'| grep "${DOCKER_USER}"); do
+    echo -e "\n<<< Checking ${IMAGE} for vulnerabilities >>>\n"
     trivy --exit-code 0 --severity "UNKNOWN,LOW,MEDIUM,HIGH" --light -q "${IMAGE}"
-    echo -e '\n<<< Critical Vulnerabilities >>>\n'
+    echo -e "\n<<< Checking ${IMAGE} for critical vulnerabilities >>>\n"
     trivy --exit-code 1 --severity CRITICAL --light -q "${IMAGE}"
     if [[ "${TRAVIS_BRANCH}" = master ]]; then
       snyk auth "${SNYK_TOKEN}" &> /dev/null
@@ -102,9 +106,7 @@ push_images () {
   fi
 }
 
-if [[ "${TRAVIS_BRANCH}" = master ]]; then
-  get_version
-fi
+get_version
 build_images
 install_prereqs
 if [[ "${VULNERABILITY_TEST}" = true ]]; then
